@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store Database</title>
+    <style>
+        body { 
+            font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+            margin: 20px;
+            background-color: #132463;
+            color: white;
+        }
+        .query1 {
+            background-color: #3d52a0;
+            color: #ede8f5;
+        }
+        .query2 {
+            background-color: #7091e6;
+            color: #ede8f5;
+        }
+        .query3 {
+            background-color: #8697c3;
+            color: #ede8f5;
+        }
+        .query4 {
+            background-color: #adbbda;
+            color: #3d52a0;
+        }
+        .query5 {
+            background-color: #ede8f5;
+            color: #3d52a0;
+        }
+        .query6 {
+            background-color: #3d52a0;
+            color: #ede8f5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px; 
+            text-align: center;
+            border: 3px solid gray; 
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #132463;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        function fetchTableData(tableName) {
+            // Hide any existing table
+            document.getElementById('tableContainer').innerHTML = "";
+
+            // Fetch data for the selected table
+            fetch(`tables.php?table=${tableName}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('tableContainer').innerHTML = data;
+                })
+                .catch(error => console.error('Error fetching table data:', error));
+        }
+
+        function toggleTable() {
+            const container = document.getElementById('tableContainer');
+            container.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body>
+    <h1>The Grocery Store Application Database</h1>
+
+    <div class="query1">
+        <h2>
+            Query 1: Filter which customer bought the most products by
+            total price (between a date range).
+        </h2>
+        <form method="GET" action="query1.php">
+            <label for="start_date1" style="display: inline-block; width: 100px; text-align: right;">Start Date:</label>
+            <input type="date" id="start_date1" name="start_date1" required style="margin-left: 10px;"> <br>
+            <label for="end_date1" style="display: inline-block; width: 100px; text-align: right;">End Date:</label>
+            <input type="date" id="end_date1" name="end_date1" required style="margin-left: 10px;"> <br>
+            <button type="submit" style="display: inline-block; width: 100px; text-align: center;">Run Query</button>
+        </form>
+    </div>
+
+    <div class="query2">
+        <h2>
+            Query 2: Retrieve which checkout kiosk made the most profit at
+            a given time range.
+        </h2>
+        <form method="GET" action="query2.php">
+            <label for="start_date2" style="display: inline-block; width: 100px; text-align: right;">Start Date:</label>
+            <input type="date" id="start_date2" name="start_date2" required style="margin-left: 10px;"> <br>
+            <label for="end_date2" style="display: inline-block; width: 100px; text-align: right;">End Date:</label>
+            <input type="date" id="end_date2" name="end_date2" required style="margin-left: 10px;"> <br>
+            <button type="submit" style="display: inline-block; width: 100px; text-align: center;">Run Query</button>
+        </form>
+    </div>
+
+    <div class="query3">
+        <h2>
+            Query 3: Get all products that were purchased by a customer at
+            their most recent checkout.
+        </h2>
+        <form method="GET" action="query3.php" class="query3">
+            <label for="customer_id3" style="display: inline-block; width: 100px; text-align: right;">Customer ID:</label>
+            <input type="number" id="customer_id3" name="customer_id3" min="1" max="15"> <br>
+            <button type="submit" style="display: inline-block; width: 100px; text-align: center;">Run Query</button>
+        </form>
+    </div>
+
+    <div class="query4">
+        <h2>
+            Query 4: Get all checkouts for a customer within a date range.
+        </h2>
+        <form method="GET" action="query4.php" class="query4">
+            <label for="customer_id4" style="display: inline-block; width: 100px; text-align: right;">Customer ID:</label>
+            <input type="number" id="customer_id4" name="customer_id4" min="1" max="15" required style="margin-left: 10px;"> <br>
+            <label for="start_date4" style="display: inline-block; width: 100px; text-align: right;">Start Date:</label>
+            <input type="date" id="start_date4" name="start_date4" required style="margin-left: 10px;"> <br>
+            <label for="end_date4" style="display: inline-block; width: 100px; text-align: right;">End Date:</label>
+            <input type="date" id="end_date4" name="end_date4" required style="margin-left: 10px;"> <br>
+            <button type="submit" style="display: inline-block; width: 100px; text-align: center;">Run Query</button>
+        </form>
+    </div>
+
+    <div class="query5">
+        <h2>
+            Query 5: Retrieve the Workers that used a certain Checkout
+            Kiosk at a given date.
+        </h2>
+        <form method="GET" action="query5.php" class="query5">
+            <label for="kiosk_id5" style="display: inline-block; width: 100px; text-align: right;">Kiosk ID:</label>
+            <input type="number" id="kiosk_id5" name="kiosk_id5" min="1" max="15" required style="margin-left: 10px;"> <br>
+            <label for="shift_date5" style="display: inline-block; width: 100px; text-align: right;">Shift Date:</label>
+            <input type="date" id="shift_date5" name="shift_date5" required style="margin-left: 10px;"> <br>
+            <button type="submit" style="display: inline-block; width: 100px; text-align: center;">Run Query</button>
+        </form>
+    </div> <br>
+
+    <div class="query6">
+        <h2>
+            (Bonus) Query 6: Display what products are restocked and which worker restocked them based on the product department and stock amount.
+        </h2>
+        <form method="GET" action="query6.php">
+            <label for="department" style="display: inline-block; width: 200px; text-align: right;">Choose a department:</label>
+            <select id="department" name="department" required style="margin-left: 10px;">
+                <option value=""></option>
+                <option value="Dairy">Dairy</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Produce">Produce</option>
+                <option value="Meat">Meat</option>
+                <option value="Pantry">Pantry</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Household">Household</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Health">Health</option>
+                <option value="Pet">Pet</option>
+            </select> <br>
+            <label for="stock_limit" style="display: inline-block; width: 200px; text-align: right;">Stock amount less than:</label>
+            <input type="number" id="stock_limit" name="stock_limit" min="1" max="1000" required style="margin-left: 10px;"> <br>
+            <button type="submit" style="display: inline-block; width: 100px; text-align: center;">Run Query</button>
+        </form>
+    </div> <br>
+
+    <div class="showTables">
+        <button onclick="fetchTableData('customer')">Show Customers Table</button>
+        <button onclick="fetchTableData('worker')">Show Workers Table</button>
+        <button onclick="fetchTableData('kiosk')">Show Kiosk Table</button>
+        <button onclick="fetchTableData('product')">Show Products Table</button>
+        <button onclick="fetchTableData('inventory')">Show Inventory Table</button>
+        <button onclick="fetchTableData('transactions')">Show Transactions Table</button>
+        <button onclick="fetchTableData('worker_kiosk_shift')">Show Worker Shifts Table</button>
+        <button onclick="toggleTable()">Hide/Show Table</button>
+        <div id="tableContainer" class="hidden"></div>
+    </div>
+</body>
+</html>
